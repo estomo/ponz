@@ -1,1 +1,1 @@
-# ponz
+# Morphological analysis tool
