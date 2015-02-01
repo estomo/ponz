@@ -66,8 +66,8 @@ class MecabParser:
     		if morphemeType in ['形容動詞語幹', '副詞可能', '接尾']:
     			#print node.surface, ' : ', morphemeType
     			return False
-    		
     	return test
+
 
     def check_unnecessary(self, noun):
         string = noun.decode('utf-8')
@@ -82,11 +82,9 @@ class MecabParser:
             return None
         elif kanji == None and hiragana != None and katakana == None and alphabet == None and len(string) < 4:
             return None
-
         #if re.search(u'^[0-9]+(年|月|日)$', string)
         if re.search(u'^年度$', string):
         	return None
         if re.search(u'^([a-z]|[ぁ-ん]|[ァ-ヴ]|[一-龠]){4,}$', string):
         	return None
-        	
         return noun
