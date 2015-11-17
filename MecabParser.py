@@ -8,7 +8,7 @@ class MecabParser:
     def __init__(self):
         self.tagger = MeCab.Tagger("-Ochasen")
 
-    def parse(self, text, omit = True):
+    def parse(self, text, omit = True, nbest = None):
         text = text.encode('utf-8')
         normalized = self.normalize(text)
         node = self.tagger.parseToNode(normalized)
@@ -23,6 +23,15 @@ class MecabParser:
                 else:
                     nouns.append(noun)
             node = node.next
+        if nbest != None:
+            subNouns = []
+            for noun in nouns:
+                subParsed = self.parseNBest(nbest, noun)
+                for res in subParsed.split("EOS\n"):
+                    res_arr = res.split("\t")
+                    if len(res_arr) > 1 and re.match("名詞", res_arr[3]):
+                        subNouns.append(res.split("\t")[0]))
+            return nouns += list(set(subNouns))
         return nouns
 
     def normalize(self, text):
