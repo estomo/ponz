@@ -35,7 +35,7 @@ class MecabParser:
         node = self.tagger.parseToNode(normalized)
         return self.extract_noun(node), self.extract_place(node)
 
-    def parse(self, text, omit = True):
+    def parse(self, text, omit = True, nbest = None):
         text = text.encode('utf-8')
         normalized = self.normalize(text)
         node = self.tagger.parseToNode(normalized)
@@ -49,6 +49,19 @@ class MecabParser:
                 else:
                     nouns.append(noun)
             node = node.next
+        if nbest != None:
+            subNouns = []
+            for noun in nouns:
+                subParsed = self.tagger.parseNBest(nbest, noun)
+                subNounNonUniq = []
+                for parts in subParsed.split("EOS\n"):
+                    for res in parts.split("\n"):
+                        splitRes = res.split("\t")
+                        if len(splitRes) > 1 and re.match("名詞", splitRes[3]) and self.check_unnecessary(splitRes[0]) != None:
+                            subNounNonUniq.append(splitRes[0])
+                subNouns = subNouns + list(set(subNounNonUniq) - set([noun]))
+            return nouns + subNouns
+
         return nouns
 
     def normalize(self, text):
@@ -82,9 +95,10 @@ class MecabParser:
             return None
         elif kanji == None and hiragana != None and katakana == None and alphabet == None and len(string) < 4:
             return None
-        #if re.search(u'^[0-9]+(年|月|日)$', string)
         if re.search(u'^年度$', string):
         	return None
-        if re.search(u'^([a-z]|[ぁ-ん]|[ァ-ヴ]|[一-龠]){4,}$', string):
+        #if re.search(u'^([a-z]|[ぁ-ん]|[ァ-ヴ]|[一-龠]){4,}$', string):
+        if re.search(u'^([a-z]|[ぁ-ん]|[ァ-ヴ]|[一-龠]){2,}$', string) == None:
         	return None
         return noun
+
