@@ -96,9 +96,9 @@ class MecabParser:
         elif kanji == None and hiragana != None and katakana == None and alphabet == None and len(string) < 4:
             return None
         if re.search(u'^年度$', string):
-        	return None
+            return None
         #if re.search(u'^([a-z]|[ぁ-ん]|[ァ-ヴ]|[一-龠]){4,}$', string):
-        if re.search(u'^([a-z]|[ぁ-ん]|[ァ-ヴ]|[一-龠]){2,}$', string) == None:
-        	return None
+        #if re.search(u'^([a-z]|[ぁ-ん]|[ァ-ヴ]|[一-龠]){2,}$', string) == None:
+        #    return None
         return noun
 
