@@ -30,11 +30,11 @@ class MecabParser:
         return nouns
 
     def noun_place(self, text, nbest = None):
-        text = text.encode('utf-8')
-        normalized = self.normalize(text)
+        new_text = text.encode('utf-8')
+        normalized = self.normalize(new_text)
         node = self.tagger.parseToNode(normalized)
         #return self.extract_noun(node), self.extract_place(node)
-        return self.parse(node, nbest), self.extract_place(node)
+        return self.parse(text, nbest), self.extract_place(node)
 
     def parse(self, text, omit = True, nbest = None):
         text = text.encode('utf-8')
