@@ -33,7 +33,8 @@ class MecabParser:
         text = text.encode('utf-8')
         normalized = self.normalize(text)
         node = self.tagger.parseToNode(normalized)
-        return self.extract_noun(node, nbest), self.extract_place(node)
+        #return self.extract_noun(node), self.extract_place(node)
+        return self.parse(node, nbest), self.extract_place(node)
 
     def parse(self, text, omit = True, nbest = None):
         text = text.encode('utf-8')
