@@ -16,30 +16,40 @@ class MecabParser:
             node = node.next
         return places
 
-    def extract_noun(self, node, omit=True):
-        nouns = []
-        while node:
-            if self.check_morpheme(node):
-                noun = node.surface
-                if omit:
-                    if self.check_unnecessary(noun) != None:
-                        nouns.append(noun)
-                else:
-                    nouns.append(noun)
-            node = node.next
-        return nouns
+    #def extract_noun(self, node, omit=True):
+    #    nouns = []
+    #    while node:
+    #        if self.check_morpheme(node):
+    #            noun = node.surface
+    #            if omit:
+    #                if self.check_unnecessary(noun) != None:
+    #                    nouns.append(noun)
+    #            else:
+    #                nouns.append(noun)
+    #        node = node.next
+    #    return nouns
+
+    def sanitize_text(self, text):
+        text = text.encode('utf-8')
+        return self.normalize(text)
+
 
     def noun_place(self, text, nbest = None):
-        new_text = text.encode('utf-8')
-        normalized = self.normalize(new_text)
-        node = self.tagger.parseToNode(normalized)
+        #new_text = text.encode('utf-8')
+        #normalized = self.normalize(new_text)
+        #node = self.tagger.parseToNode(normalized)
+        node = self.tagger.parseToNode(self.sanitize_text(text))
         #return self.extract_noun(node), self.extract_place(node)
-        return self.parse_nbest(text, omit=True, nbest=nbest), self.extract_place(node)
+        return self.extract_noun(node, omit=True, nbest=nbest), self.extract_place(node)
 
-    def parse_nbest(self, text, omit = True, nbest = None):
-        text = text.encode('utf-8')
-        normalized = self.normalize(text)
-        node = self.tagger.parseToNode(normalized)
+    def parse(serlf, text, omit=True, nbest=None):
+        node = self.tagger.parseToNode(self.sanitize_text(text))
+        return extract_noun(node, omit=omit, nbest=nbest)
+
+    def extract_noun(self, node, omit = True, nbest = None):
+        #text = text.encode('utf-8')
+        #normalized = self.normalize(text)
+        #node = self.tagger.parseToNode(normalized)
         nouns = []
         while node:
             if self.check_morpheme(node):
@@ -97,8 +107,6 @@ class MecabParser:
         elif kanji == None and hiragana != None and katakana == None and alphabet == None and len(string) < 4:
             return None
         if re.search(u'^年度$', string):
-            return None
-        if re.search(u'^([a-z]|[ぁ-ん]|[ァ-ヴ]|[一-龠]){2,}', string) != None:
             return None
         #if re.search(u'^([a-z]|[ぁ-ん]|[ァ-ヴ]|[一-龠]){4,}$', string):
         #if re.search(u'^([a-z]|[ぁ-ん]|[ァ-ヴ]|[一-龠]){2,}$', string) == None:
