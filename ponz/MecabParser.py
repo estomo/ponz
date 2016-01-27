@@ -16,27 +16,11 @@ class MecabParser:
             node = node.next
         return places
 
-    #def extract_noun(self, node, omit=True):
-    #    nouns = []
-    #    while node:
-    #        if self.check_morpheme(node):
-    #            noun = node.surface
-    #            if omit:
-    #                if self.check_unnecessary(noun) != None:
-    #                    nouns.append(noun)
-    #            else:
-    #                nouns.append(noun)
-    #        node = node.next
-    #    return nouns
-
-
 
     def noun_place(self, text, nbest = None):
         text = text.encode('utf-8')
         normalized = self.normalize(text)
         node = self.tagger.parseToNode(normalized)
-        #node = self.tagger.parseToNode(self.normalize(text.encode('utf-8')))
-        #return self.extract_noun(node), self.extract_place(node)
         return self.extract_noun(node, omit=True, nbest=nbest), self.extract_place(node)
 
 
@@ -46,9 +30,6 @@ class MecabParser:
 
 
     def extract_noun(self, node, omit = True, nbest = None):
-        #text = text.encode('utf-8')
-        #normalized = self.normalize(text)
-        #node = self.tagger.parseToNode(normalized)
         nouns = []
         while node:
             if self.check_morpheme(node):
@@ -71,7 +52,6 @@ class MecabParser:
                             subNounNonUniq.append(splitRes[0])
                 subNouns = subNouns + list(set(subNounNonUniq) - set([noun]))
             return nouns + subNouns
-
         return nouns
 
     def normalize(self, text):
@@ -87,14 +67,12 @@ class MecabParser:
     	if flag == True:
     		morphemeType = node.feature.split(',')[1]
     		if morphemeType in ['形容動詞語幹', '副詞可能', '接尾']:
-    			#print node.surface, ' : ', morphemeType
     			return False
     	return test
 
 
     def check_unnecessary(self, noun):
         #string = noun.decode('utf-8')
-        print noun, type(noun)
         string = unicode(noun, 'utf-8')
         kanji = re.search(u'[一-龠]', string)
         hiragana = re.search(u'[ぁ-ん]', string)
