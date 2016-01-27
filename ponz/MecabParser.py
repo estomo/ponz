@@ -42,9 +42,11 @@ class MecabParser:
         #return self.extract_noun(node), self.extract_place(node)
         return self.extract_noun(node, omit=True, nbest=nbest), self.extract_place(node)
 
+
     def parse(serlf, text, omit=True, nbest=None):
         node = self.tagger.parseToNode(self.sanitize_text(text))
         return extract_noun(node, omit=omit, nbest=nbest)
+
 
     def extract_noun(self, node, omit = True, nbest = None):
         #text = text.encode('utf-8')
@@ -94,7 +96,8 @@ class MecabParser:
 
 
     def check_unnecessary(self, noun):
-        string = noun.decode('utf-8')
+        #string = noun.decode('utf-8')
+        string = noun
         kanji = re.search(u'[一-龠]', string)
         hiragana = re.search(u'[ぁ-ん]', string)
         katakana = re.search(u'[ァ-ヴ]', string)
