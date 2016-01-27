@@ -32,10 +32,10 @@ class MecabParser:
 
 
     def noun_place(self, text, nbest = None):
-        #new_text = text.encode('utf-8')
-        #normalized = self.normalize(new_text)
-        #node = self.tagger.parseToNode(normalized)
-        node = self.tagger.parseToNode(self.normalize(text.encode('utf-8')))
+        text = text.encode('utf-8')
+        normalized = self.normalize(text)
+        node = self.tagger.parseToNode(normalized)
+        #node = self.tagger.parseToNode(self.normalize(text.encode('utf-8')))
         #return self.extract_noun(node), self.extract_place(node)
         return self.extract_noun(node, omit=True, nbest=nbest), self.extract_place(node)
 
@@ -93,7 +93,7 @@ class MecabParser:
 
 
     def check_unnecessary(self, noun):
-        string = noun.decode('utf-8')
+        #string = noun.decode('utf-8')
         kanji = re.search(u'[一-龠]', string)
         hiragana = re.search(u'[ぁ-ん]', string)
         katakana = re.search(u'[ァ-ヴ]', string)
