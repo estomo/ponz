@@ -30,8 +30,8 @@ class MecabParser:
     #    return nouns
 
     def sanitize_text(self, text):
-        text = text.encode('utf-8')
-        return self.normalize(text)
+        new_text = text.encode('utf-8')
+        return self.normalize(new_text)
 
 
     def noun_place(self, text, nbest = None):
@@ -96,8 +96,7 @@ class MecabParser:
 
 
     def check_unnecessary(self, noun):
-        #string = noun.decode('utf-8')
-        string = noun
+        string = noun.decode('utf-8')
         kanji = re.search(u'[一-龠]', string)
         hiragana = re.search(u'[ぁ-ん]', string)
         katakana = re.search(u'[ァ-ヴ]', string)
