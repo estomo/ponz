@@ -35,7 +35,7 @@ class MecabParser:
         #new_text = text.encode('utf-8')
         #normalized = self.normalize(new_text)
         #node = self.tagger.parseToNode(normalized)
-        node = self.tagger.parseToNode(self.normalize(text))
+        node = self.tagger.parseToNode(self.normalize(text.encode('utf-8')))
         #return self.extract_noun(node), self.extract_place(node)
         return self.extract_noun(node, omit=True, nbest=nbest), self.extract_place(node)
 
