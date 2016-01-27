@@ -100,7 +100,7 @@ class MecabParser:
         katakana = re.search(u'[ァ-ヴ]', string)
         alphabet = re.search(u'[a-z]', string)
         
-        if len(unicode(string, 'utf-8')) == 1:
+        if len(string) == 1:
             return None
         elif kanji == None and hiragana == None and katakana == None and alphabet == None:
             return None
