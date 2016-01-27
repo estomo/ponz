@@ -29,22 +29,19 @@ class MecabParser:
     #        node = node.next
     #    return nouns
 
-    def sanitize_text(self, text):
-        new_text = text.encode('utf-8')
-        return self.normalize(new_text)
 
 
     def noun_place(self, text, nbest = None):
         #new_text = text.encode('utf-8')
         #normalized = self.normalize(new_text)
         #node = self.tagger.parseToNode(normalized)
-        node = self.tagger.parseToNode(self.sanitize_text(text))
+        node = self.tagger.parseToNode(self.normalize(text))
         #return self.extract_noun(node), self.extract_place(node)
         return self.extract_noun(node, omit=True, nbest=nbest), self.extract_place(node)
 
 
     def parse(serlf, text, omit=True, nbest=None):
-        node = self.tagger.parseToNode(self.sanitize_text(text))
+        node = self.tagger.parseToNode(self.normalize(text))
         return extract_noun(node, omit=omit, nbest=nbest)
 
 
