@@ -90,13 +90,15 @@ class MecabParser:
         katakana = re.search(u'[ァ-ヴ]', string)
         alphabet = re.search(u'[a-z]', string)
         
-        if len(string) == 1:
+        if len(unicode(string, 'utf-8')) == 1:
             return None
         elif kanji == None and hiragana == None and katakana == None and alphabet == None:
             return None
         elif kanji == None and hiragana != None and katakana == None and alphabet == None and len(string) < 4:
             return None
         if re.search(u'^年度$', string):
+            return None
+        if re.search(u'^([a-z]|[ぁ-ん]|[ァ-ヴ]|[一-龠]){2,}', string) != None:
             return None
         #if re.search(u'^([a-z]|[ぁ-ん]|[ァ-ヴ]|[一-龠]){4,}$', string):
         #if re.search(u'^([a-z]|[ぁ-ん]|[ァ-ヴ]|[一-龠]){2,}$', string) == None:
