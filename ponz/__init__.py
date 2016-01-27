@@ -3,5 +3,5 @@
 from MecabParser import MecabParser
  
 __author__  = 'estomo'
-__version__ = '0.0.17'
+__version__ = '0.0.18'
 __license__ = 'MIT'
