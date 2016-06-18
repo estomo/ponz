@@ -8,20 +8,31 @@ class MecabParser:
     def __init__(self):
         self.tagger = MeCab.Tagger("-Ochasen")
 
-    def extract_place(self, node):
+    def extract_place(self, text):
+        #def extract_place(self, node):
+        #places = []
+        #while node:
+        #    if node.feature.split(',')[2] == '地域' and node.feature.split(',')[1] == '固有名詞':
+        #        places.append(node.surface)
+        #    node = node.next
+        #return places
         places = []
-        while node:
-            if node.feature.split(',')[2] == '地域' and node.feature.split(',')[1] == '固有名詞':
-                places.append(node.surface)
-            node = node.next
-        return places
+        subParsed = self.tagger.parseNBest(3, text)
+        for parts in subParsed.split("EOS\n"):
+             for res in parts.split("\n"):
+                 splitRes = res.split("\t")
+                 if len(splitRes) > 1 and re.search("地域", splitRes[3]) and len(splitRes[0]) > 1:
+                     places.append(splitRes[0])
+        return list(set(places))
+
 
 
     def noun_place(self, text, nbest = None):
         text = text.encode('utf-8')
         normalized = self.normalize(text)
         node = self.tagger.parseToNode(normalized)
-        return self.extract_noun(node, omit=True, nbest=nbest), self.extract_place(node)
+        #return self.extract_noun(node, omit=True, nbest=nbest), self.extract_place(node)
+        return self.extract_noun(node, omit=True, nbest=nbest), self.extract_place(normalized)
 
 
     def parse(serlf, text, omit=True, nbest=None):
