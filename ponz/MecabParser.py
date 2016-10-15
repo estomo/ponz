@@ -51,7 +51,7 @@ class MecabParser:
             if self.check_morpheme(node):
                 noun = node.surface
                 if omit:
-                    if self.check_unnecessary(noun) != None:
+                    if len(noun) > 1 and self.check_unnecessary(noun) != None:
                         nouns.append(noun)
                 else:
                     nouns.append(noun)
