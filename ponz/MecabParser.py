@@ -88,8 +88,8 @@ class MecabParser:
 
 
     def check_unnecessary(self, noun):
-        string = noun.decode('utf-8')
-        #string = unicode(noun, 'utf-8')
+        #string = noun.decode('utf-8')
+        string = unicode(noun, 'utf-8')
         kanji = re.search(u'[一-龠]', string)
         hiragana = re.search(u'[ぁ-ん]', string)
         katakana = re.search(u'[ァ-ヴ]', string)
