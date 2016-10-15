@@ -40,7 +40,7 @@ class MecabParser:
         return self.extract_noun(node, omit=True, nbest=nbest), self.extract_place(normalized)
 
 
-    def parse(serlf, text, omit=True, nbest=None):
+    def parse(self, text, omit=True, nbest=None):
         node = self.tagger.parseToNode(self.normalize(text))
         return extract_noun(node, omit=omit, nbest=nbest)
 
