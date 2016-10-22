@@ -51,7 +51,8 @@ class MecabParser:
             if self.check_morpheme(node):
                 noun = node.surface
                 if omit:
-                    if len(noun) > 1 and self.check_unnecessary(noun) != None:
+                    #if len(noun) > 1 and self.check_unnecessary(noun) != None:
+                    if self.check_unnecessary(noun) != None:
                         nouns.append(noun)
                 else:
                     nouns.append(noun)
@@ -64,7 +65,8 @@ class MecabParser:
                 for parts in subParsed.split("EOS\n"):
                     for res in parts.split("\n"):
                         splitRes = res.split("\t")
-                        if len(splitRes) > 1 and re.match("名詞", splitRes[3]) and self.check_unnecessary(splitRes[0]) != None:
+                        #if len(splitRes) > 1 and re.match("名詞", splitRes[3]) and self.check_unnecessary(splitRes[0]) != None:
+                        if re.match("名詞", splitRes[3]) and self.check_unnecessary(splitRes[0]) != None:
                             subNounNonUniq.append(splitRes[0])
                 subNouns = subNouns + list(set(subNounNonUniq) - set([noun]))
             return nouns + subNouns
@@ -95,9 +97,10 @@ class MecabParser:
         katakana = re.search(u'[ァ-ヴ]', string)
         alphabet = re.search(u'[a-z]', string)
         
-        if len(string) == 1:
-            return None
-        elif kanji == None and hiragana == None and katakana == None and alphabet == None:
+        #if len(string) == 1:
+        #    return None
+        #elif kanji == None and hiragana == None and katakana == None and alphabet == None:
+        if kanji == None and hiragana == None and katakana == None and alphabet == None:
             return None
         elif kanji == None and hiragana != None and katakana == None and alphabet == None and len(string) < 4:
             return None
