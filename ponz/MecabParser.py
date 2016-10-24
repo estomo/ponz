@@ -59,7 +59,8 @@ class MecabParser:
             node = node.next
         if nbest != None:
             subNouns = []
-            for noun in nouns:
+            lnouns = [x for x in noun if len(x) > 1]
+            for noun in lnouns:
                 subParsed = self.tagger.parseNBest(nbest, noun)
                 subNounNonUniq = []
                 for parts in subParsed.split("EOS\n"):
