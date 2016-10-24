@@ -66,7 +66,7 @@ class MecabParser:
                     for res in parts.split("\n"):
                         print res
                         splitRes = res.split("\t")
-                        if len(splitRes) > 1 and re.match("名詞", splitRes[3]) and self.check_unnecessary(splitRes[0]) != None:
+                        if len(splitRes) > 4 and re.match("名詞", splitRes[3]) and self.check_unnecessary(splitRes[0]) != None:
                             subNounNonUniq.append(splitRes[0])
                 subNouns = subNouns + list(set(subNounNonUniq) - set([noun]))
             return nouns + subNouns
