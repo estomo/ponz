@@ -23,10 +23,11 @@ class MecabParser:
         for parts in subParsed.split("EOS\n"):
             dividedPlaces = []
             for res in parts.split("\n"):
-                splitRes = res.split("\t")
-                if len(splitRes) > 1 and re.search("地域", splitRes[3]) and self.check_unnecessary(splitRes[0]) != None:
-                    dividedPlaces.append(splitRes[0])
-                    #places.append(splitRes[0])
+                pass
+                #splitRes = res.split("\t")
+                #if len(splitRes) > 1 and re.search("地域", splitRes[3]) and self.check_unnecessary(splitRes[0]) != None:
+                #    dividedPlaces.append(splitRes[0])
+                #    #places.append(splitRes[0])
             places = places + list((Counter(dividedPlaces) - Counter(places)).elements())
         return places
 
