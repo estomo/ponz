@@ -23,11 +23,10 @@ class MecabParser:
         for parts in subParsed.split("EOS\n"):
             dividedPlaces = []
             for res in parts.split("\n"):
-                pass
-                #splitRes = res.split("\t")
-                #if len(splitRes) > 1 and re.search("地域", splitRes[3]) and self.check_unnecessary(splitRes[0]) != None:
-                #    dividedPlaces.append(splitRes[0])
-                #    #places.append(splitRes[0])
+                splitRes = res.split("\t")
+                if len(splitRes) > 1 and re.search("地域", splitRes[3]) and self.check_unnecessary(splitRes[0]) != None:
+                    dividedPlaces.append(splitRes[0])
+                    #places.append(splitRes[0])
             places = places + list((Counter(dividedPlaces) - Counter(places)).elements())
         return places
 
@@ -67,9 +66,9 @@ class MecabParser:
                 for parts in subParsed.split("EOS\n"):
                     for res in parts.split("\n"):
                         print res
-                        splitRes = res.split("\t")
-                        if len(splitRes) > 4 and re.match("名詞", splitRes[3]) and self.check_unnecessary(splitRes[0]) != None:
-                            subNounNonUniq.append(splitRes[0])
+                        #splitRes = res.split("\t")
+                        #if len(splitRes) > 4 and re.match("名詞", splitRes[3]) and self.check_unnecessary(splitRes[0]) != None:
+                        #    subNounNonUniq.append(splitRes[0])
                 subNouns = subNouns + list(set(subNounNonUniq) - set([noun]))
             return nouns + subNouns
         return nouns
