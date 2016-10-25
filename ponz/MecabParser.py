@@ -66,6 +66,7 @@ class MecabParser:
                 for parts in subParsed.split("EOS\n"):
                     for res in parts.split("\n"):
                         splitRes = res.split("\t")
+                        print splitRes
                         if len(splitRes) > 4 and re.match("名詞", splitRes[3]) and self.check_unnecessary(splitRes[0]) != None:
                             subNounNonUniq.append(splitRes[0])
                 subNouns = subNouns + list(set(subNounNonUniq) - set([noun]))
