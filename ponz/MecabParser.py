@@ -65,10 +65,9 @@ class MecabParser:
                 subNounNonUniq = []
                 for parts in subParsed.split("EOS\n"):
                     for res in parts.split("\n"):
-                        print res
-                        #splitRes = res.split("\t")
-                        #if len(splitRes) > 4 and re.match("名詞", splitRes[3]) and self.check_unnecessary(splitRes[0]) != None:
-                        #    subNounNonUniq.append(splitRes[0])
+                        splitRes = res.split("\t")
+                        if len(splitRes) > 4 and re.match("名詞", splitRes[3]) and self.check_unnecessary(splitRes[0]) != None:
+                            subNounNonUniq.append(splitRes[0])
                 subNouns = subNouns + list(set(subNounNonUniq) - set([noun]))
             return nouns + subNouns
         return nouns
@@ -103,7 +102,9 @@ class MecabParser:
         #elif kanji == None and hiragana == None and katakana == None and alphabet == None:
         if kanji == None and hiragana == None and katakana == None and alphabet == None:
             return None
-        elif kanji == None and hiragana != None and katakana == None and alphabet == None and len(string) < 4:
+        elif kanji == None and hiragana != None and katakana == None and alphabet == None and len(string) < 3:
+            return None
+        elif kanji == None and len(string)  == 1:
             return None
         if re.search(u'^年度$', string):
             return None
