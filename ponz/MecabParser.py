@@ -52,7 +52,7 @@ class MecabParser:
                 noun = node.surface
                 if omit:
                     #if len(noun) > 1 and self.check_unnecessary(noun) != None:
-                    if self.check_unnecessary(noun) != None:
+                    if (len(noun) > 1 or re.match("固有名詞", node.feature(node).split(",")[1])) and self.check_unnecessary(noun) != None:
                         nouns.append(noun)
                 else:
                     nouns.append(noun)
@@ -66,7 +66,6 @@ class MecabParser:
                 for parts in subParsed.split("EOS\n"):
                     for res in parts.split("\n"):
                         splitRes = res.split("\t")
-                        print splitRes
                         if len(splitRes) > 4 and re.match("固有名詞", splitRes[3]) and self.check_unnecessary(splitRes[0]) != None:
                             subNounNonUniq.append(splitRes[0])
                 subNouns = subNouns + list(set(subNounNonUniq) - set([noun]))
