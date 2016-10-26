@@ -32,12 +32,12 @@ class MecabParser:
 
 
 
-    def noun_place(self, text, nbest = None):
+    def noun_place(self, text, nbest = None, split=False):
         text = text.encode('utf-8')
         normalized = self.normalize(text)
         node = self.tagger.parseToNode(normalized)
         #return self.extract_noun(node, omit=True, nbest=nbest), self.extract_place(node)
-        return self.extract_noun(node, omit=True, nbest=nbest), self.extract_place(normalized)
+        return self.extract_noun(node, omit=True, nbest=nbest, split=split), self.extract_place(normalized)
 
 
     def parse(self, text, omit=True, nbest=None):
@@ -45,7 +45,7 @@ class MecabParser:
         return self.extract_noun(node, omit=omit, nbest=nbest)
 
 
-    def extract_noun(self, node, omit = True, nbest = None):
+    def extract_noun(self, node, omit = True, nbest = None, split=False):
         nouns = []
         while node:
             if self.check_morpheme(node):
@@ -69,7 +69,7 @@ class MecabParser:
                         if len(splitRes) > 4 and re.match("固有名詞", splitRes[3]) and self.check_unnecessary(splitRes[0]) != None:
                             subNounNonUniq.append(splitRes[0])
                 subNouns = subNouns + list(set(subNounNonUniq) - set([noun]))
-            if nbest == 2:
+            if split == True:
                 return nouns, subNouns
             return nouns + subNouns
         return nouns
