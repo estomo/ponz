@@ -69,6 +69,8 @@ class MecabParser:
                         if len(splitRes) > 4 and re.match("固有名詞", splitRes[3]) and self.check_unnecessary(splitRes[0]) != None:
                             subNounNonUniq.append(splitRes[0])
                 subNouns = subNouns + list(set(subNounNonUniq) - set([noun]))
+            if nbest == 2:
+                return nouns, subNouns
             return nouns + subNouns
         return nouns
 
