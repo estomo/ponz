@@ -52,7 +52,7 @@ class MecabParser:
                 noun = node.surface
                 if omit:
                     #if len(noun) > 1 and self.check_unnecessary(noun) != None:
-                    if self.check_unnecessary(noun) != None and (len(unicode(noun, 'utf-8', errors='ignore')) > 1 or re.match("名詞", node.feature.split(",")[1])):
+                    if self.check_unnecessary(noun) != None and (len(unicode(noun, 'utf-8', errors='ignore')) > 1 or re.match("名詞", node.feature)):
                         nouns.append(noun)
                 else:
                     nouns.append(noun)
