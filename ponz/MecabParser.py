@@ -109,6 +109,9 @@ class MecabParser:
             return None
         if re.search(u'^年度$', string):
             return None
+        if re.search(u'^[0-9]+[一-龠]{1,4}', string):
+            return None
+
         #if re.search(u'^([a-z]|[ぁ-ん]|[ァ-ヴ]|[一-龠]){4,}$', string):
         #if re.search(u'^([a-z]|[ぁ-ん]|[ァ-ヴ]|[一-龠]){2,}$', string) == None:
         #    return None
