@@ -122,7 +122,7 @@ class MecabParser:
             return None
         if number != None and alphabet == None and re.search(u'g$', string) and kanji == None and len(sring) < 6:
             return None
-        if number != None and re.search(u'倍$'):
+        if number != None and re.search(u'倍$', string):
             return None
         if re.search(u'^第[0-9]', string):
             return None
