@@ -97,6 +97,7 @@ class MecabParser:
         hiragana = re.search(u'[ぁ-ん]', string)
         katakana = re.search(u'[ァ-ヴ]', string)
         alphabet = re.search(u'[a-z]', string)
+        number = re.search(u'[0-9]', string)
         
         #if len(string) == 1:
         #    return None
@@ -111,6 +112,22 @@ class MecabParser:
             return None
         if re.search(u'^[0-9]+[一-龠]{1,4}', string):
             return None
+        if re.search(u'[0-9]+.*(年|月|日|時|分|秒)', string):
+            return None
+        if number != None and len(string) < 3:
+            return None
+        if re.search(u'曜', string) and len(string) < 4:
+            return None
+        if number != None and re.search(u'倍$'):
+            return None
+        if number != None and alphabet == None and re.search(u'g$', string) and kanji == None and len(sring) < 6:
+            return None
+        if number != None and re.search(u'倍$'):
+            return None
+        if re.search(u'^第[0-9]', string):
+            return None
+
+
 
         #if re.search(u'^([a-z]|[ぁ-ん]|[ァ-ヴ]|[一-龠]){4,}$', string):
         #if re.search(u'^([a-z]|[ぁ-ん]|[ァ-ヴ]|[一-龠]){2,}$', string) == None:
