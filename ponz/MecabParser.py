@@ -118,8 +118,6 @@ class MecabParser:
             return None
         if re.search(u'曜', string) and len(string) < 4:
             return None
-        if number != None and re.search(u'倍$'):
-            return None
         if number != None and alphabet == None and re.search(u'g$', string) and kanji == None and len(sring) < 6:
             return None
         if number != None and re.search(u'倍$', string):
