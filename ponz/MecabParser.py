@@ -124,11 +124,8 @@ class MecabParser:
             return None
         if re.search(u'^第[0-9]', string):
             return None
+        if re.search(u'^[0-9]+\.*[0-9]*(g|m|mm)$', string):
+            return None
 
-
-
-        #if re.search(u'^([a-z]|[ぁ-ん]|[ァ-ヴ]|[一-龠]){4,}$', string):
-        #if re.search(u'^([a-z]|[ぁ-ん]|[ァ-ヴ]|[一-龠]){2,}$', string) == None:
-        #    return None
         return noun
 
